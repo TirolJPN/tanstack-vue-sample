@@ -1,23 +1,14 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import useDogQuery from "./composables/useDogQuery";
+
+const { isLoading, isError, data, status } = useDogQuery();
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <div v-if="isLoading">{{ status }}</div>
+  <img v-if="data" :src="data.message" />
+  <div v-if="isError">Unknown error occurred</div>
 </template>
 
 <style scoped>
